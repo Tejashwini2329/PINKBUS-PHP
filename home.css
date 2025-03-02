@@ -1,0 +1,183 @@
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    
+   height: 100vh;
+   width: 100%;
+    background-size: contain;
+    background-image: url(pink.png);
+    background-repeat: no-repeat;
+    background-position: 60vh;
+    
+    
+}
+
+/* Grid container */
+.c {
+    height: 100%;
+    width: 100%;
+    display: grid;
+   
+    grid-template-rows: 10% 60% 10% 15% 5%;
+    grid-template-areas:
+                        "header header"
+                        "hero hero"
+                        "question question"
+                        "testimonials testimonials"
+                        "footer footer";
+}
+
+/* Header styles */
+header {
+    background: #ff6f61;
+    color: rgb(255, 255, 255);
+   
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: 0 50px;
+    grid-area: header;
+}
+header h1{
+    color:darkmagenta;
+}
+/* Logo styles */
+.logo {
+    height: 50px; /* Adjust the height as needed */
+    width: auto; /* Maintain aspect ratio */
+    margin-right: 20px; /* Space between logo and navigation */
+}
+h1{
+    color:rgb(237, 72, 182);
+}
+/* Navigation styles */
+nav {
+    flex-grow: 1;
+    display: grid;
+    justify-content:space-evenly;
+    align-items: center;
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: inline-block;
+}
+
+/* Main sections alignment */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    flex-grow: 1;
+}
+
+/* Hero section styles */
+.hero {
+    
+ 
+    color: rgb(18, 2, 2);
+    padding: 50px;
+    width: 100%;
+    max-width: 1200px;
+    grid-area: hero;
+}
+
+.hero h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 1.2em;
+}
+
+.btn {
+    background: #fff;
+    color: #ff6f61;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Testimonials section styles */
+.testimonials {
+    padding: 20px 0;
+    background: #96edee;
+    width: 100%;
+    grid-area: testimonials;
+}
+
+
+
+/* Question section */
+.question {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    padding: 40px 0;
+    grid-area: question;
+}
+
+.question a {
+    font-size: 1.5em;
+    color: white;
+    text-decoration: none;
+    background-color: #ff6f61;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-right: 150px;
+}
+
+/* Footer styles */
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+   
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    grid-area: footer;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero h1 {
+        font-size: 2em;
+    }
+
+    .hero p {
+        font-size: 1em;
+    }
+}

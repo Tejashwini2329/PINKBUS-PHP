@@ -1,0 +1,61 @@
+<?php
+// Database connection
+$conn = new mysqli("localhost", "root", "", "library_db");
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Admin Login
+if (isset($_POST['admin_login'])) {
+    $username = $_POST['username'];
+    $password = md5($_POST['password']);
+    $sql = "SELECT * FROM admin WHERE username='$username' AND password='$password'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        session_start();
+        $_SESSION['admin'] = $username;
+        header("Location: admin_dashboard.php");
+    } else {
+        echo "Invalid login details";
+    }
+}
+
+// Book Search API (Web OPAC)
+if (isset($_GET['search'])) {
+    $query = $_GET['search'];
+    $sql = "SELECT * FROM books WHERE title LIKE '%$query%' OR author LIKE '%$query%' OR category LIKE '%$query%'";
+    $result = $conn->query($sql);
+    $books = [];
+    while ($row = $result->fetch_assoc()) {
+        $books[] = $row;
+    }
+    echo json_encode($books);
+    exit();
+}
+
+// Web OPAC - Display Books
+if (isset($_GET['opac'])) {
+    $sql = "SELECT * FROM books";
+    $result = $conn->query($sql);
+    echo "<h2>Online Public Access Catalog</h2><table border='1'><tr><th>Title</th><th>Author</th><th>Category</th><th>Availability</th></tr>";
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr><td>" . $row['title'] . "</td><td>" . $row['author'] . "</td><td>" . $row['category'] . "</td><td>" . ($row['available'] ? 'Available' : 'Issued') . "</td></tr>";
+    }
+    echo "</table>";
+    exit();
+}
+
+// Book Issue Function
+if (isset($_POST['issue_book'])) {
+    $book_id = $_POST['book_id'];
+    $user_id = $_POST['user_id'];
+    $issue_date = date("Y-m-d");
+    $return_date = date("Y-m-d", strtotime("+14 days"));
+    $sql = "INSERT INTO issued_books (book_id, user_id, issue_date, return_date) VALUES ('$book_id', '$user_id', '$issue_date', '$return_date')";
+    if ($conn->query($sql) === TRUE) {
+        echo "Book issued successfully!";
+    } else {
+        echo "Error: " . $conn->error;
+    }
+}
+?>
